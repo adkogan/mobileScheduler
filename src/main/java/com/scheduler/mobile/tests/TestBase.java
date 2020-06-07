@@ -16,33 +16,19 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 
 public class TestBase {
+    protected static ApplicationManager app = new ApplicationManager();
 
-    protected static ApplicationManager app = new ApplicationManager(
-            System.getProperty("browser",BrowserType.CHROME ),
-            System.getProperty("headless","false" )
 
-    );
-
-    Logger logger = LoggerFactory.getLogger(com.scheduler.mobile.tests.TestBase.class);
 
     @BeforeSuite
     public void setUp() throws InterruptedException, IOException {
         app.init();
     }
 
-    @BeforeMethod
-    public void logTestStart(Method m, Object[] p){
-        logger.info("Start test " + m.getName() + " with parameters: " + Arrays.asList(p));
 
-    }
-    @AfterMethod
-    public void logTestStop(Method m){
-    logger.info("Stop test " + m.getName());
-    }
-
-
-    @AfterSuite
+    @AfterSuite(enabled = false)
     public void tearDown() {
+
         app.stop();
     }
 
